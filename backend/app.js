@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const path= require('path')
 const dotenv = require('dotenv')
+import MainHeader from '../frontend/src/components/MainHeader'
 app.use(express.json())
 
 
@@ -13,8 +14,10 @@ const order = require('./routes/order')
 app.use('/api/v1',products)
 app.use('/api/v1',auth)
 app.use('/api/v1',order)
-app.use('/',products)
 
+app.get('/', function(req, res) {
+    res.render(MainHeader.js)
+  });
 if(process.env.NODE_ENV !== 'PRODUCTION') {
     app.use(express.static(path.join(__dirname, '../frontend/build')))
    
@@ -22,10 +25,6 @@ if(process.env.NODE_ENV !== 'PRODUCTION') {
     //     res.sendFile(path.resolve(__dirname, '../frontend/build/index.html'));
     // })
 }
-// Set default cache-control header for all responses
-app.use((req, res, next) => {
-  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
-  next();
-});
+
 
 module.exports = app
