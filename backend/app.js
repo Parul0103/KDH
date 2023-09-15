@@ -21,5 +21,10 @@ if(process.env.NODE_ENV !== 'PRODUCTION') {
     //     res.sendFile(path.resolve(__dirname, '../frontend/build/index.html'));
     // })
 }
+// Set default cache-control header for all responses
+app.use((req, res, next) => {
+  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+  next();
+});
 
 module.exports = app
